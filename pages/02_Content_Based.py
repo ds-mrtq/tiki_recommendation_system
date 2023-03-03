@@ -44,47 +44,47 @@ st.subheader("Product Catalog")
 random_products = data.sample(n=6)
 random_products.shape[0]
 
-n_cols = 3
-n_rows = 1 + random_products.shape[0] // int(n_cols)
-# 'n_rows:'
-# n_rows
-rows = [st.container() for _ in range(n_rows)]
-# 'rows:'
-# rows
-cols_per_row = [r.columns(n_cols) for r in rows]
-# 'cols_per_row'
-# cols_per_row
-cols = [column for row in cols_per_row for column in row]
-# 'cols'
-# cols
-count = 0
-for i, product in random_products.iterrows():
-    # i
-    # product
-    cols[count].image(product['image'], width=150, caption=product['name'], 
-                use_column_width=True, output_format="PNG")
-    cols[count].write(f"**Giá:** {product['list_price']}")
-    count = count + 1
+# n_cols = 3
+# n_rows = 1 + random_products.shape[0] // int(n_cols)
+# # 'n_rows:'
+# # n_rows
+# rows = [st.container() for _ in range(n_rows)]
+# # 'rows:'
+# # rows
+# cols_per_row = [r.columns(n_cols) for r in rows]
+# # 'cols_per_row'
+# # cols_per_row
+# cols = [column for row in cols_per_row for column in row]
+# # 'cols'
+# # cols
+# count = 0
+# for i, product in random_products.iterrows():
+#     # i
+#     # product
+#     cols[count].image(product['image'], width=150, caption=product['name'], 
+#                 use_column_width=True, output_format="PNG")
+#     cols[count].write(f"**Giá:** {product['list_price']}")
+#     count = count + 1
 
 
-# When a product is clicked, open a new browser tab to display more details
-if st.button("Click here to select a product"):
-    selected_product = st.selectbox("Select a product", random_products["name"])
-    product_info = random_products[random_products["name"] == selected_product].iloc[0]
-    url = product_info["url"]
-    js = f"window.open('{url}')"  # JavaScript to open a new tab
-    html = '<img src="{}" style="max-width: 200px">'.format(product_info["image"])
-    html += f"<h2>{product_info['name']}</h2>"
-    html += f"<p>{product_info['description']}</p>"
-    html += f"<p>List price: {product_info['list_price']}</p>"
-    html += f"<p>Brand: {product_info['brand']}</p>"
-    html += f"<p>Group: {product_info['group']}</p>"
-    st.write("You have selected this product:")
-    st.write(html, unsafe_allow_html=True)
-    st.write(
-        f'<script type="text/javascript">{js}</script>',
-        unsafe_allow_html=True,
-    )
+# # When a product is clicked, open a new browser tab to display more details
+# if st.button("Click here to select a product"):
+#     selected_product = st.selectbox("Select a product", random_products["name"])
+#     product_info = random_products[random_products["name"] == selected_product].iloc[0]
+#     url = product_info["url"]
+#     js = f"window.open('{url}')"  # JavaScript to open a new tab
+#     html = '<img src="{}" style="max-width: 200px">'.format(product_info["image"])
+#     html += f"<h2>{product_info['name']}</h2>"
+#     html += f"<p>{product_info['description']}</p>"
+#     html += f"<p>List price: {product_info['list_price']}</p>"
+#     html += f"<p>Brand: {product_info['brand']}</p>"
+#     html += f"<p>Group: {product_info['group']}</p>"
+#     st.write("You have selected this product:")
+#     st.write(html, unsafe_allow_html=True)
+#     st.write(
+#         f'<script type="text/javascript">{js}</script>',
+#         unsafe_allow_html=True,
+#     )
 
 
 # ########
