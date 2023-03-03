@@ -9,3 +9,4 @@ jieba
 underthesea
 streamlit-aggrid
 wordcloud
+st-clickable-images
