@@ -90,7 +90,7 @@ for i, product in recomend_result.iterrows():
     image_url = product['image']
     target_url = product['url']
     product_name = product['name']
-    price = product['list_price']
+    price = "{:,.0f}".format(product['list_price'])
     
     cols[count].image(product['image']
                       , width=150
@@ -99,7 +99,7 @@ for i, product in recomend_result.iterrows():
                       , use_column_width=True
                       , output_format="PNG")
     cols[count].write(f"***Rating:*** {product['rating']}")
-    cols[count].write(f"**Giá:** {product['list_price']}")
+    cols[count].write(f"**Giá:** {price}")
     
 
     count = count + 1
