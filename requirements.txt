@@ -8,3 +8,4 @@ gensim
 jieba
 underthesea
 streamlit-aggrid
+wordcloud
