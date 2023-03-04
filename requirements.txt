@@ -9,4 +9,6 @@ jieba
 underthesea
 streamlit-aggrid
 wordcloud
+pyspark
+findspark
 st-clickable-images
