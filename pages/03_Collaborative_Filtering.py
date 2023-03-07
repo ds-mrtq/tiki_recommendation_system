@@ -46,26 +46,67 @@ if filtered_items:
 else:
     st.write('No customer found.')
 
-# selected_item
-# selected_customer_id['customer_id']
 st.markdown("""### Your recommendation products:""")
 recommend_items = recommend_dict[recommend_dict['customer_id'] == selected_item]['recommendations']
-recommend_items.iloc[0]
-# recommend_items = recommend_dict[recommend_dict['customer_id'] == selected_item]['recommendations'][0]
-# recommend_items
-# recommend_items[0]
+# recommend_items.iloc[0]
+
+
+# Initialize an empty dataframe with columns name
+recommend_items_df = pd.DataFrame(columns=['customer_id', 'product_id', 'rating'])
+# st.write(len(recommend_items.iloc[0]))
+
+# Add values using for loop 
 i = 0
-
 for item in recommend_items.iloc[0]:
-    st.write(i)
-    st.write(item['product_id'])
+    # st.write(i)
+    # st.write(item['product_id'])
+    recommend_items_df.loc[i] = [selected_item, item['product_id'], item['rating']]
     i = i + 1
-# recomend_items = recomend_dict[recomend_dict['product_id'].isin(selected_item)][['product_id', 'rcmd_product_id', 'score']]
-
-# st.write(recomend_items)
+# recommend_items_df
 
 
-# # print (pd.merge(df1, df2, left_on='id', right_on='id1', how='left').drop('id1', axis=1))
-# recomend_result = pd.merge(recomend_items, data, left_on='rcmd_product_id', right_on='item_id', how='left').head(6)
-# # recomend_result = data[data['item_id'].isin(recomend_items['rcmd_product_id'])]
-# # st.write(recomend_result)
+# get products list
+products_df = pd.read_csv('data/ProductRaw.csv')
+
+recomend_result = pd.merge(recommend_items_df, products_df, left_on='product_id', right_on='item_id', how='left')
+# recomend_result
+
+
+def show_items(recomend_result):
+    n_cols = 3
+    n_rows = 1 + recomend_result.shape[0] // int(n_cols)
+# 'n_rows:'
+# n_rows
+    rows = [st.container() for _ in range(n_rows)]
+# 'rows:'
+# rows
+    cols_per_row = [r.columns(n_cols) for r in rows]
+# 'cols_per_row'
+# cols_per_row
+    cols = [column for row in cols_per_row for column in row]
+# 'cols'
+# cols
+    count = 0
+
+    for i, product in recomend_result.iterrows():
+    # i
+    # product
+        image_url = product['image']
+        target_url = product['url']
+        product_name = product['name']
+        price = "{:,.0f}".format(product['list_price'])
+    
+        cols[count].image(product['image']
+                      , width=150
+                    #   , caption=f'[{product_name}]({target_url})'
+                    , caption=product['name']
+                      , use_column_width=True
+                      , output_format="PNG")
+        cols[count].write(f"***Rating:*** {product['rating_x']}")
+        cols[count].write(f"**Giá:** {price}")
+    
+
+        count = count + 1
+
+show_items(recomend_result)
+
