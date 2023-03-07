@@ -59,12 +59,13 @@ else:
 
 st.markdown("""### Your recommendation products:""")
 
-recomend_items = recomend_dict[recomend_dict['product_id'].isin(selected_product_id)][['product_id', 'rcmd_product_id', 'score']]
+recomend_items = recomend_dict[recomend_dict['product_id'].isin(selected_product_id)][['product_id', 'rcmd_product_id', 'score']].head(6)
 # st.write(recomend_items)
-
+recomend_items.sort_values(by=['score'], ascending=False, inplace=True)
 
 # print (pd.merge(df1, df2, left_on='id', right_on='id1', how='left').drop('id1', axis=1))
-recomend_result = pd.merge(recomend_items, data, left_on='rcmd_product_id', right_on='item_id', how='left').head(6)
+recomend_result = pd.merge(recomend_items, data, left_on='rcmd_product_id', right_on='item_id', how='left')
+recomend_result.sort_values(by=['rating', 'score'], ascending=False, inplace=True)
 # recomend_result = data[data['item_id'].isin(recomend_items['rcmd_product_id'])]
 # st.write(recomend_result)
 

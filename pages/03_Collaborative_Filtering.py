@@ -68,13 +68,14 @@ for item in recommend_items.iloc[0]:
 # get products list
 products_df = pd.read_csv('data/ProductRaw.csv')
 
-recomend_result = pd.merge(recommend_items_df, products_df, left_on='product_id', right_on='item_id', how='left')
+recommend_result = pd.merge(recommend_items_df, products_df, left_on='product_id', right_on='item_id', how='left')
+recommend_result.sort_values(by=['rating_x'], ascending=False, inplace=True)
 # recomend_result
 
 
-def show_items(recomend_result):
+def show_items(recommend_result):
     n_cols = 3
-    n_rows = 1 + recomend_result.shape[0] // int(n_cols)
+    n_rows = 1 + recommend_result.shape[0] // int(n_cols)
 # 'n_rows:'
 # n_rows
     rows = [st.container() for _ in range(n_rows)]
@@ -88,7 +89,7 @@ def show_items(recomend_result):
 # cols
     count = 0
 
-    for i, product in recomend_result.iterrows():
+    for i, product in recommend_result.iterrows():
     # i
     # product
         image_url = product['image']
@@ -108,5 +109,5 @@ def show_items(recomend_result):
 
         count = count + 1
 
-show_items(recomend_result)
+show_items(recommend_result)
 
