@@ -47,23 +47,33 @@ else:
     st.write('No customer found.')
 
 st.markdown("""### Your recommendation products:""")
-recommend_items = recommend_dict[recommend_dict['customer_id'] == selected_item]['recommendations']
+# recommend_items = recommend_dict[recommend_dict['customer_id'] == selected_item]['recommendations']
 # recommend_items.iloc[0]
 
+# # Initialize an empty dataframe with columns name
+# recommend_items_df = pd.DataFrame(columns=['customer_id', 'product_id', 'rating'])
+# # st.write(len(recommend_items.iloc[0]))
 
-# Initialize an empty dataframe with columns name
-recommend_items_df = pd.DataFrame(columns=['customer_id', 'product_id', 'rating'])
-# st.write(len(recommend_items.iloc[0]))
-
-# Add values using for loop 
-i = 0
-for item in recommend_items.iloc[0]:
-    # st.write(i)
-    # st.write(item['product_id'])
-    recommend_items_df.loc[i] = [selected_item, item['product_id'], item['rating']]
-    i = i + 1
+# # Add values using for loop 
+# i = 0
+# for item in recommend_items.iloc[0]:
+#     # st.write(i)
+#     # st.write(item['product_id'])
+#     recommend_items_df.loc[i] = [selected_item, item['product_id'], item['rating']]
+#     i = i + 1
 # recommend_items_df
 
+recommend_items = recommend_dict.loc[recommend_dict['customer_id'] == selected_item, 'recommendations']
+recommend_items_lst = recommend_items.iloc[0]
+# recommend_items_lst
+
+# Create a list of tuples with required data 
+rcm_item_tuples_list = [(selected_item, item.get('product_id'), item.get('rating')) for item in recommend_items_lst]
+# rcm_item_tuples_list
+
+# Create dataframe directly from the list of tuples
+recommend_items_df = pd.DataFrame(rcm_item_tuples_list, columns=['customer_id', 'product_id', 'rating'])
+# recommend_items_df
 
 # get products list
 products_df = pd.read_csv('data/ProductRaw.csv')
